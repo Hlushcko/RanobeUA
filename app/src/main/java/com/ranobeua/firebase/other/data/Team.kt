@@ -7,6 +7,5 @@ data class Team(
     val name: String,
     val description: String,
     val emailCreator: String,
-    val emailTeam: List<String>,
     val date: Date
 )

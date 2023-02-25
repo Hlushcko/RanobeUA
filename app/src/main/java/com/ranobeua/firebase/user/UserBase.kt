@@ -11,9 +11,19 @@ import com.ranobeua.firebase.user.data.User
 
 class UserBase {
 
-    private val auth = FirebaseAuth.getInstance()
-    private val userBase = FirebaseDatabase.getInstance().getReference("users")
+    companion object {
+        private val auth = FirebaseAuth.getInstance()
+        private val userBase = FirebaseDatabase.getInstance().getReference("users")
 
+        fun addCommentToUser(idComment: String){
+            val email = auth.currentUser?.email
+            if(email != null) {
+                val comments = userBase.child(email).child("comments")
+                comments.push().setValue(idComment)
+            }
+        }
+
+    }
 
     fun registerAccount(name: String, email: String, password: String){
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -60,6 +70,7 @@ class UserBase {
             }
         })
     }
+
 
 
     fun updateInfoUser(hashMap: HashMap<String, Any>){

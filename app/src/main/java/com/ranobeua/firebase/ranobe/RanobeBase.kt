@@ -6,8 +6,7 @@ import com.ranobeua.firebase.ranobe.data.RanobeTeamInfo
 
 class RanobeBase {
 
-
-    val ranobeBase = FirebaseDatabase.getInstance().getReference("ranobe")
+    private val ranobeBase = FirebaseDatabase.getInstance().getReference("ranobe")
 
 
     fun createRanobe(ranobe: Ranobe){

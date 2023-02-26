@@ -59,7 +59,7 @@ class UserBase {
     //                }
     //            }
     fun getUserInfo(email: String, callback: (User?) -> Unit){
-        userBase.child(email).addListenerForSingleValueEvent(object: ValueEventListener{
+        userBase.orderByChild("email").startAt(email).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val result = snapshot.getValue(User::class.java)
                 callback(result)

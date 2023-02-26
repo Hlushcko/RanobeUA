@@ -6,8 +6,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ranobeua.firebase.other.data.Comment
+import com.ranobeua.firebase.ranobe.ChapterBase
 import com.ranobeua.firebase.user.UserBase
 import java.time.LocalDateTime
+
 
 class CommentBase {
 
@@ -28,10 +30,10 @@ class CommentBase {
             com.child("titleName").setValue(originalName)
             com.child("comment").setValue(comment)
 
-            // TODO: створити в чептері функцію для збереження id коментаря.
+            ChapterBase.addCommentIdToChapter(id, idChapter)
             UserBase.addCommentToUser(id)
         }else{
-            throw Exception("current user aren`t has a uid")
+            throw Exception("current user aren`t has an email")
         }
     }
 

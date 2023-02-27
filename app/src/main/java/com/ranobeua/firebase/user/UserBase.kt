@@ -72,7 +72,9 @@ class UserBase {
     }
 
 
-
+    // TODO: потрібно дати можливість міняти нік, кількість прочитаних глав,
+    //  рівень та id команди в які може бути учасник. Потім це буде перевірятись.
+    //  В хеш таблицю в String пишемо наприклад "name", а Any буде містити нове значення.
     fun updateInfoUser(hashMap: HashMap<String, Any>){
         val email = auth.currentUser?.email ?: throw Exception("user email is not found")
         userBase.child(email).updateChildren(hashMap)

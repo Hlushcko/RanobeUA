@@ -47,6 +47,10 @@ class RanobeBase {
         teamInfo.child("chaptersId")
     }
 
+    fun updateInfoRanobeTeam(originalName: String, idTeam: String, newInfo: HashMap<String, Any>){
+        ranobeBase.child(originalName).child(idTeam).updateChildren(newInfo)
+    }
+
 
     fun getRanobeInfo(originalName: String, callable: (Ranobe?) -> Unit){
         val base = ranobeBase.orderByChild("originalName").startAt(originalName)

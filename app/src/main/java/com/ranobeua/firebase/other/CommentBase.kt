@@ -61,5 +61,9 @@ class CommentBase {
         })
     }
 
+    fun setComment(idComment: String, newText: String){
+        commentBase.child(idComment).child("comment").setValue(newText)
+    }
+
 
 }

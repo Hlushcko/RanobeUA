@@ -25,7 +25,7 @@ class ChapterBase {
     fun addChapter(originalName: String, idTeam: String, text: String, chapter: Chapter){
         val localTime = LocalDateTime.now()
         val id: String =  originalName.substring(0, 5) + System.currentTimeMillis() + localTime.year + localTime.dayOfMonth + localTime.dayOfYear
-        val chose = chaptersBase.child(id).push()
+        val chose = chaptersBase.child(idTeam).child(id)
 
         val email = FirebaseAuth.getInstance().currentUser?.email
             ?: throw Exception("email user not found")
@@ -42,6 +42,13 @@ class ChapterBase {
         RanobeBase.addChapterToRanobe(originalName, idTeam, id)
     }
 
+    fun updateInfoChapter(idTeam: String, idChapter: String, newInfo: HashMap<String, Any>){
+        chaptersBase.child(idTeam).child(idChapter).updateChildren(newInfo)
+    }
+
+    fun updateTextChapter(idText: String, newText: String){
+        chapterTextBase.child(idText).setValue(newText)
+    }
 
     private fun saveText(text: String, id: String){
         val push = chapterTextBase.push()

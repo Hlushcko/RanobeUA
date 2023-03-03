@@ -1,6 +1,7 @@
 package com.ranobeua.firebase.user
 
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -12,8 +13,8 @@ import com.ranobeua.firebase.user.data.User
 class UserBase {
 
     companion object {
-        private val auth = FirebaseAuth.getInstance()
-        private val userBase = FirebaseDatabase.getInstance().getReference("users")
+        val auth = FirebaseAuth.getInstance()
+        val userBase = FirebaseDatabase.getInstance().getReference("users")
 
         fun addCommentToUser(idComment: String){
             val email = auth.currentUser?.email
@@ -26,8 +27,10 @@ class UserBase {
     }
 
     fun registerAccount(name: String, email: String, password: String){
+        Log.e("info", "${auth.currentUser?.email}")
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             auth.currentUser?.sendEmailVerification()
+            Log.e("info", "one")
             addInfoToDatabase(name)
         }
 
@@ -36,7 +39,9 @@ class UserBase {
 
     private fun addInfoToDatabase(name: String){
         val email = auth.currentUser?.email
+        Log.e("info", "two")
         if(email != null){
+            Log.e("info", "trree")
             val user = userBase.child(email)
             user.child("email").setValue(email)
             user.child("name").setValue(name)
@@ -81,14 +86,20 @@ class UserBase {
     }
 
 
-    fun logIn(email: String, password: String) {
+    fun logIn(email: String, password: String, callable: (Boolean?) -> Unit) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                callable(it.isSuccessful)
+            }
         }else{
             throw Exception("user is not created or not verification")
         }
     }
 
+
+    fun signOut(){
+        auth.signOut()
+    }
 
     fun getStatusLogin() : Boolean {
         return auth.currentUser != null && auth.currentUser?.isEmailVerified!!

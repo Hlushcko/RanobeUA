@@ -1,10 +1,10 @@
 package com.ranobeua.firebase.other.data
 
 data class Comment(
-    val idComment: String,
-    val idChapter: String,
-    val emailUser: String,
-    val nameUser: String,
-    val titleName: String,
-    val comment: String
+    var idComment: String = "",
+    var idChapter: String = "",
+    var emailUser: String = "",
+    var nameUser: String = "",
+    var titleName: String = "",
+    var comment: String = ""
 )

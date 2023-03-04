@@ -1,11 +1,11 @@
 package com.ranobeua.firebase.ranobe.data
 
 data class RanobeTeamInfo(
-    val name: String,
-    val description: String,
-    val status: String,
-    val team: String,
-    val idTeam: String,
-    val urlTeam: String,
-    val chaptersId: List<String> = emptyList()
+    var name: String = "",
+    var description: String = "",
+    var status: String = "",
+    var team: String = "",
+    var idTeam: String = "",
+    var urlTeam: String = "",
+    var chaptersId: List<String> = emptyList()
 )

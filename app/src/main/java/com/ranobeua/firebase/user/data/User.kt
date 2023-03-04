@@ -1,10 +1,10 @@
 package com.ranobeua.firebase.user.data
 
 data class User(
-    val email: String,
-    val name : String,
-    val readChapters: Int,
-    val level: String,
-    val commentsID: List<String>,
-    val teamId: List<String>
-)
+    var email: String = "",
+    var name : String = "",
+    var readChapters: Int = 0,
+    var level: String = "",
+    var commentsID: List<String> = emptyList(),
+    var teamId: List<String> = emptyList()
+){}

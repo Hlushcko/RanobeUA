@@ -2,6 +2,7 @@ package com.ranobeua.firebase.user
 
 
 import android.util.Log
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,29 +27,30 @@ class UserBase {
 
     }
 
-    fun registerAccount(name: String, email: String, password: String){
-        Log.e("info", "${auth.currentUser?.email}")
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            auth.currentUser?.sendEmailVerification()
-            Log.e("info", "one")
-            addInfoToDatabase(name)
+    // TODO: name має складатись виключно із символів, без знаків ?.!№;":%* та інших, виключно текст
+    fun registerAccount(name: String, email: String, password: String, callback: (Boolean?) -> Unit){
+        if(name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                auth.currentUser?.sendEmailVerification()
+                addInfoToDatabase(name, email)
+                callback(true)
+            }
+        }else{
+            callback(false)
         }
-
     }
 
 
-    private fun addInfoToDatabase(name: String){
-        val email = auth.currentUser?.email
-        Log.e("info", "two")
-        if(email != null){
+    private fun addInfoToDatabase(name: String, email: String){
+        if(email.isNotEmpty()){
             Log.e("info", "trree")
-            val user = userBase.child(email)
+            val user = userBase.child(name)
             user.child("email").setValue(email)
             user.child("name").setValue(name)
             user.child("readChapters").setValue(0)
             user.child("level").setValue("новачок")
-            user.child("comments")
-            user.child("team")
+            user.child("comments").push()
+            user.child("team").push()
         }else{
             throw Exception("user email is null")
         }
@@ -63,14 +65,15 @@ class UserBase {
     //                    нуль, кажемо це користувачу
     //                }
     //            }
-    fun getUserInfo(email: String, callback: (User?) -> Unit){
-        userBase.orderByChild("email").startAt(email).addListenerForSingleValueEvent(object: ValueEventListener{
+    fun getUserInfo(name: String, callback: (User?) -> Unit){
+        userBase.child(name).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val result = snapshot.getValue(User::class.java)
                 callback(result)
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.e("error", error.message)
                 callback(null)
             }
         })
@@ -80,9 +83,8 @@ class UserBase {
     // TODO: потрібно дати можливість міняти нік, кількість прочитаних глав,
     //  рівень та id команди в які може бути учасник. Потім це буде перевірятись.
     //  В хеш таблицю в String пишемо наприклад "name", а Any буде містити нове значення.
-    fun updateInfoUser(hashMap: HashMap<String, Any>){
-        val email = auth.currentUser?.email ?: throw Exception("user email is not found")
-        userBase.child(email).updateChildren(hashMap)
+    fun updateInfoUser(name: String, hashMap: HashMap<String, Any>){
+        userBase.child(name).updateChildren(hashMap)
     }
 
 

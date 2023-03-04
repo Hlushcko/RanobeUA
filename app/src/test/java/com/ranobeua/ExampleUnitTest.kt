@@ -1,5 +1,6 @@
 package com.ranobeua
 
+import android.app.Instrumentation
 import org.junit.Test
 
 import org.junit.Assert.*

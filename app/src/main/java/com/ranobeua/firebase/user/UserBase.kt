@@ -34,59 +34,28 @@ class UserBase {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
 
                 if(it.isSuccessful) {
-                    val latch = CountDownLatch(1)
-
-                    checkNameUser(name){ result ->
-                        if(result != null && !result){
-                            auth.currentUser?.sendEmailVerification()
-                            addInfoToDatabase(name, email)
-                            callback(true)
-                        }
-                        latch.countDown()
-                    }
-
-                    latch.await()
-
+                    auth.currentUser?.sendEmailVerification()
+                    addInfoToDatabase(name, email)
+                    callback(true)
                 }else{
                     callback(false)
                 }
+
             }
         }else{
             callback(false)
         }
     }
 
-    private fun checkNameUser(name: String, callable: (Boolean?) -> Unit){
-        userBase.child(name).addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    callable(true)
-                }else{
-                    callable(false)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                throw Exception("connect to firebase is closed")
-            }
-
-        })
-    }
-
 
     private fun addInfoToDatabase(name: String, email: String){
-        if(email.isNotEmpty()){
-            Log.e("info", "trree")
-            val user = userBase.child(name)
-            user.child("email").setValue(email)
-            user.child("name").setValue(name)
-            user.child("readChapters").setValue(0)
-            user.child("level").setValue("новачок")
-            user.child("comments").push()
-            user.child("team").push()
-        }else{
-            throw Exception("user email is null")
-        }
+        val user = userBase.child(name)
+        user.child("email").setValue(email)
+        user.child("name").setValue(name)
+        user.child("readChapters").setValue(0)
+        user.child("level").setValue("новачок")
+        user.child("comments").push()
+        user.child("team").push()
     }
 
 
@@ -143,5 +112,8 @@ class UserBase {
         auth.sendPasswordResetEmail(email)
     }
 
+    fun deleteAccount(){
+        auth.currentUser?.delete()
+    }
 
 }

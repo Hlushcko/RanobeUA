@@ -1,18 +1,15 @@
 package com.ranobeua
 
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp
 import com.ranobeua.firebase.user.UserBase
-import org.awaitility.Awaitility
 
 import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 
 @RunWith(AndroidJUnit4::class)

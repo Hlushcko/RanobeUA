@@ -1,7 +1,8 @@
-package com.ranobeua
+package com.ranobeua.mainApp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ranobeua.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

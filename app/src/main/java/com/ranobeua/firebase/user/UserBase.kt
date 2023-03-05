@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ranobeua.firebase.user.data.User
+import java.util.concurrent.CountDownLatch
 
 
 class UserBase {
@@ -31,13 +32,45 @@ class UserBase {
     fun registerAccount(name: String, email: String, password: String, callback: (Boolean?) -> Unit){
         if(name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                auth.currentUser?.sendEmailVerification()
-                addInfoToDatabase(name, email)
-                callback(true)
+
+                if(it.isSuccessful) {
+                    val latch = CountDownLatch(1)
+
+                    checkNameUser(name){ result ->
+                        if(result != null && !result){
+                            auth.currentUser?.sendEmailVerification()
+                            addInfoToDatabase(name, email)
+                            callback(true)
+                        }
+                        latch.countDown()
+                    }
+
+                    latch.await()
+
+                }else{
+                    callback(false)
+                }
             }
         }else{
             callback(false)
         }
+    }
+
+    private fun checkNameUser(name: String, callable: (Boolean?) -> Unit){
+        userBase.child(name).addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    callable(true)
+                }else{
+                    callable(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                throw Exception("connect to firebase is closed")
+            }
+
+        })
     }
 
 
@@ -73,7 +106,6 @@ class UserBase {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("error", error.message)
                 callback(null)
             }
         })

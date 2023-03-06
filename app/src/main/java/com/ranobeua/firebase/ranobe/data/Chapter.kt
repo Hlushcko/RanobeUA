@@ -1,13 +1,11 @@
 package com.ranobeua.firebase.ranobe.data
 
-import java.util.*
-
 data class Chapter(
     var number: Int = 0,
     var name: String = "",
-    var date: Date = Date(),
+    var date: Long = 0L,
     var chapterId: String = "",
     var emailCreator: String = "",
     var textId: String = "",
-    var commentsId: List<String> = emptyList()
+    var commentsId: Map<String, String> = emptyMap()
 )

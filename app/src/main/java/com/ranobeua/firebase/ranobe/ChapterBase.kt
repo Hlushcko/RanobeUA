@@ -35,7 +35,7 @@ class ChapterBase {
         chose.child("number").setValue(chapter.number)
         chose.child("name").setValue(chapter.name)
         chose.child("textId").setValue(id)
-        chose.child("date").setValue(chapter.date.time)
+        chose.child("date").setValue(chapter.date)
         chose.child("commentsId")
 
         saveText(text, id)

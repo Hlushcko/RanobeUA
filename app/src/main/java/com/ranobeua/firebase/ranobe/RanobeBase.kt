@@ -30,7 +30,7 @@ class RanobeBase {
         ranobePath.child("author").setValue(ranobe.author)
         ranobePath.child("year").setValue(ranobe.year)
 
-        addTranslateTeamInfo(ranobe.originalName, ranobe.ranobeTeamInfo[0])
+        addTranslateTeamInfo(ranobe.originalName, ranobe.ranobeTeamInfo.values.first())
     }
 
 

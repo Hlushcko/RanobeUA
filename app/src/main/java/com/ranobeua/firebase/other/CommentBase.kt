@@ -37,14 +37,7 @@ class CommentBase {
         }
     }
 
-    // TODO: клас який буде це викликати має містити наступний код:
-    //  getUserInfo("a"){ data ->
-    //                if (data != null){
-    //                   не нуль, обробляєм
-    //                }else{
-    //                    нуль, кажемо це користувачу
-    //                }
-    //            }
+
     fun getComment(idComment: String, callable: (Comment?) -> Unit){
         val com = commentBase.orderByChild("idComment").startAt(idComment)
 

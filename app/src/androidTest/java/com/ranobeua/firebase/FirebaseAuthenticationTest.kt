@@ -135,6 +135,7 @@ class FirebaseAuthenticationTest {
 
     @Test
     fun addComment(){
+        //this account you need a create in your base.
         val email = "comment.test.user@ranobe.ua.com"
         val password = "passwordUser"
         var latch = CountDownLatch(1)

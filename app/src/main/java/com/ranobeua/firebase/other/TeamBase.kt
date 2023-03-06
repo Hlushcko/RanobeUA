@@ -17,7 +17,7 @@ class TeamBase {
         tm.child("name").setValue(team.name)
         tm.child("description").setValue(team.description)
         tm.child("emailCreator").setValue(team.emailCreator)
-        tm.child("date").setValue(team.date.time)
+        tm.child("date").setValue(team.date)
     }
 
     fun getTeam(idTeam: String, callable: (Team?) -> Unit){
@@ -33,10 +33,11 @@ class TeamBase {
     }
 
     fun getTeamByEmailCreator(email: String, callable: (Team?) -> Unit){
-        teamBase.orderByChild("emailCreator").startAt(email)
+        teamBase.orderByChild("emailCreator").equalTo(email)
             .addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                callable(snapshot.getValue(Team::class.java))
+                val team = snapshot.children.firstOrNull()?.getValue(Team::class.java)
+                callable(team)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -45,8 +46,15 @@ class TeamBase {
         })
     }
 
-    fun setTeamDescription(idTeam: String, description: String){
+    fun setTeamDescription(idTeam: String, description: String, callable: (Boolean?) -> Unit){
         teamBase.child(idTeam).child("description").setValue(description)
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    callable(true)
+                }else{
+                    callable(false)
+                }
+            }
     }
 
 

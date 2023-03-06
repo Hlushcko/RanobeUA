@@ -7,5 +7,5 @@ data class RanobeTeamInfo(
     var team: String = "",
     var idTeam: String = "",
     var urlTeam: String = "",
-    var chaptersId: List<String> = emptyList()
+    var chaptersId: Map<String, String> = emptyMap()
 )

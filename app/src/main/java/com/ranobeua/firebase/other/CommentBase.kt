@@ -31,7 +31,7 @@ class CommentBase {
             com.child("comment").setValue(comment)
 
             ChapterBase.addCommentIdToChapter(id, idChapter)
-            UserBase.addCommentToUser(id)
+            UserBase.addCommentToUser(id){}
         }else{
             throw Exception("current user aren`t has an email")
         }

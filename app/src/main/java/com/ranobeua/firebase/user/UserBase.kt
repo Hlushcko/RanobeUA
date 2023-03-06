@@ -1,6 +1,7 @@
 package com.ranobeua.firebase.user
 
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,7 +16,7 @@ class UserBase {
         val auth = FirebaseAuth.getInstance()
         val userBase = FirebaseDatabase.getInstance().getReference("users")
 
-        fun addCommentToUser(idComment: String){
+        fun addCommentToUser(idComment: String, callable: (Boolean?) -> Unit){
             val email = auth.currentUser?.email
             if(email != null) {
                 userBase.orderByChild("email").equalTo(email)
@@ -23,10 +24,14 @@ class UserBase {
 
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val userPath = snapshot.children.firstOrNull()?.key
+                            Log.e("info", "path = $userPath base = $userBase auth = $auth")
 
                             if (userPath != null && userPath.isNotEmpty()) {
-                                val comments = userBase.child(userPath).child("comments")
+                                val comments = userBase.child(userPath).child("commentsId")
                                 comments.push().setValue(idComment)
+                                callable(true)
+                            }else{
+                                callable(false)
                             }
                         }
 
@@ -68,8 +73,8 @@ class UserBase {
         user.child("name").setValue(name)
         user.child("readChapters").setValue(0)
         user.child("level").setValue("новачок")
-        user.child("comments").push()
-        user.child("team").push()
+        user.child("commentsId").push()
+        user.child("teamId").push()
     }
 
 

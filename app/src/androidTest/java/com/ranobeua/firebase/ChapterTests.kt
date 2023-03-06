@@ -3,19 +3,20 @@ package com.ranobeua.firebase
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.ranobeua.firebase.other.TeamBase
-import com.ranobeua.firebase.other.data.Team
-import com.ranobeua.firebase.ranobe.ChapterBase
-import com.ranobeua.firebase.ranobe.RanobeBase
-import com.ranobeua.firebase.ranobe.data.Chapter
-import com.ranobeua.firebase.ranobe.data.Ranobe
-import com.ranobeua.firebase.user.UserBase
+
+import com.ranobeua.base.firebase.other.TeamBase
+import com.ranobeua.base.firebase.other.data.Team
+import com.ranobeua.base.firebase.ranobe.ChapterBase
+import com.ranobeua.base.firebase.ranobe.data.Chapter
+import com.ranobeua.base.firebase.user.UserBase
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.util.concurrent.CountDownLatch
+
 
 @RunWith(JUnit4::class)
 class ChapterTests {
@@ -38,7 +39,8 @@ class ChapterTests {
         latch.await()
     }
 
-    private fun addChepter(){
+    @Test
+    fun addChepter(){
         var team: Team? = null
         TeamBase().getTeamByEmailCreator(FirebaseAuth.getInstance().currentUser?.email!!){
             Assert.assertEquals(true, it != null)

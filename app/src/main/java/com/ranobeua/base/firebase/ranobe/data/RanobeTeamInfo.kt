@@ -1,4 +1,4 @@
-package com.ranobeua.firebase.ranobe.data
+package com.ranobeua.base.firebase.ranobe.data
 
 data class RanobeTeamInfo(
     var name: String = "",

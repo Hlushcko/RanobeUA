@@ -3,12 +3,13 @@ package com.ranobeua.firebase
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.ranobeua.firebase.other.TeamBase
-import com.ranobeua.firebase.other.data.Team
-import com.ranobeua.firebase.ranobe.RanobeBase
-import com.ranobeua.firebase.ranobe.data.Ranobe
-import com.ranobeua.firebase.ranobe.data.RanobeTeamInfo
-import com.ranobeua.firebase.user.UserBase
+
+import com.ranobeua.base.firebase.other.TeamBase
+import com.ranobeua.base.firebase.other.data.Team
+import com.ranobeua.base.firebase.ranobe.RanobeBase
+import com.ranobeua.base.firebase.ranobe.data.Ranobe
+import com.ranobeua.base.firebase.ranobe.data.RanobeTeamInfo
+import com.ranobeua.base.firebase.user.UserBase
 
 import org.junit.Before
 import org.junit.Test

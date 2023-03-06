@@ -1,13 +1,13 @@
-package com.ranobeua.firebase.other
+package com.ranobeua.base.firebase.other
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.ranobeua.firebase.other.data.Comment
-import com.ranobeua.firebase.ranobe.ChapterBase
-import com.ranobeua.firebase.user.UserBase
+import com.ranobeua.base.firebase.other.data.Comment
+import com.ranobeua.base.firebase.ranobe.ChapterBase
+import com.ranobeua.base.firebase.user.UserBase
 import java.time.LocalDateTime
 
 
@@ -39,7 +39,7 @@ class CommentBase {
 
 
     fun getComment(idComment: String, callable: (Comment?) -> Unit){
-        val com = commentBase.orderByChild("idComment").startAt(idComment)
+        val com = commentBase.orderByChild("idComment").equalTo(idComment)
 
         com.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

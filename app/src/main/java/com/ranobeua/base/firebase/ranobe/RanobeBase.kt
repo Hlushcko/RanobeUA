@@ -1,11 +1,11 @@
-package com.ranobeua.firebase.ranobe
+package com.ranobeua.base.firebase.ranobe
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.ranobeua.firebase.ranobe.data.Ranobe
-import com.ranobeua.firebase.ranobe.data.RanobeTeamInfo
+import com.ranobeua.base.firebase.ranobe.data.Ranobe
+import com.ranobeua.base.firebase.ranobe.data.RanobeTeamInfo
 
 class RanobeBase {
 

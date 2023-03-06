@@ -1,4 +1,4 @@
-package com.ranobeua.firebase.user
+package com.ranobeua.base.firebase.user
 
 
 import com.google.firebase.auth.FirebaseAuth
@@ -6,7 +6,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.ranobeua.firebase.user.data.User
+import com.ranobeua.base.firebase.user.data.User
 
 
 class UserBase {

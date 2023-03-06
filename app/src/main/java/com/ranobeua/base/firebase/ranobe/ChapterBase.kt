@@ -1,11 +1,11 @@
-package com.ranobeua.firebase.ranobe
+package com.ranobeua.base.firebase.ranobe
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.ranobeua.firebase.ranobe.data.Chapter
+import com.ranobeua.base.firebase.ranobe.data.Chapter
 import java.time.LocalDateTime
 
 class ChapterBase {
@@ -38,7 +38,7 @@ class ChapterBase {
         chose.child("date").setValue(chapter.date)
 
         saveText(text, id)
-        RanobeBase.addChapterToRanobe(originalName, idTeam, id){
+        RanobeBase.addChapterToRanobe(originalName, idTeam, id) {
             callable(it)
         }
     }

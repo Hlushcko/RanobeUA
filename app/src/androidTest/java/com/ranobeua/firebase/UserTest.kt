@@ -3,7 +3,7 @@ package com.ranobeua.firebase
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp
-import com.ranobeua.firebase.user.UserBase
+import com.ranobeua.base.firebase.user.UserBase
 
 import org.junit.runner.RunWith
 import org.junit.Assert.*

@@ -1,4 +1,4 @@
-package com.ranobeua.firebase.user.data
+package com.ranobeua.base.firebase.user.data
 
 data class User(
     var email: String = "",

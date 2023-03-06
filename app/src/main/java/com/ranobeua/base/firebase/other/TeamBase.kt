@@ -1,4 +1,4 @@
-package com.ranobeua.firebase.other
+package com.ranobeua.base.firebase.other
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -6,8 +6,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.ranobeua.firebase.other.data.Team
-import com.ranobeua.firebase.user.UserBase
+import com.ranobeua.base.firebase.other.data.Team
+import com.ranobeua.base.firebase.user.UserBase
 
 class TeamBase {
 

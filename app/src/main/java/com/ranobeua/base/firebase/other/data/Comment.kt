@@ -1,4 +1,4 @@
-package com.ranobeua.firebase.other.data
+package com.ranobeua.base.firebase.other.data
 
 data class Comment(
     var idComment: String = "",

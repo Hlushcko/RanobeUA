@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch
 
 
 @RunWith(AndroidJUnit4::class)
-class FirebaseAuthenticationTest {
+class FirebaseUserTest {
 
     private val firebase = UserBase();
 
@@ -148,7 +148,7 @@ class FirebaseAuthenticationTest {
 
 
         latch = CountDownLatch(1)
-        UserBase.addCommentToUser("testComment"){ result ->
+        UserBase.addElementToUser("testComment", "commentsId"){ result ->
             assertEquals(true, result)
             latch.countDown()
         }
@@ -160,6 +160,39 @@ class FirebaseAuthenticationTest {
             assertEquals("новачок", result?.level)
             assertEquals(0, result?.readChapters)
             assertEquals(true, result?.commentsId?.size!! > 0)
+            latch.countDown()
+        }
+        latch.await()
+    }
+
+
+    @Test
+    fun addTeam(){
+        //this account you need a create in your base.
+        val email = "comment.test.user@ranobe.ua.com"
+        val password = "passwordUser"
+        var latch = CountDownLatch(1)
+
+        firebase.logIn(email, password) { result ->
+            assertEquals(true, result)
+            latch.countDown()
+        }
+        latch.await()
+
+
+        latch = CountDownLatch(1)
+        UserBase.addElementToUser("testTeam", "teamId"){ result ->
+            assertEquals(true, result)
+            latch.countDown()
+        }
+        latch.await()
+
+        latch = CountDownLatch(1)
+        firebase.getUserInfoByEmail(email) { result ->
+            assertEquals(email, result?.email)
+            assertEquals("новачок", result?.level)
+            assertEquals(0, result?.readChapters)
+            assertEquals(true, result?.teamId?.size!! > 0)
             latch.countDown()
         }
         latch.await()

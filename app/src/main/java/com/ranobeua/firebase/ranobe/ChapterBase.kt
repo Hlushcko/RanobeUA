@@ -22,7 +22,7 @@ class ChapterBase {
     }
 
 
-    fun addChapter(originalName: String, idTeam: String, text: String, chapter: Chapter){
+    fun addChapter(originalName: String, idTeam: String, text: String, chapter: Chapter, callable: (Boolean?) -> Unit){
         val localTime = LocalDateTime.now()
         val id: String =  originalName.substring(0, 5) + System.currentTimeMillis() + localTime.year + localTime.dayOfMonth + localTime.dayOfYear
         val chose = chaptersBase.child(idTeam).child(id)
@@ -36,10 +36,11 @@ class ChapterBase {
         chose.child("name").setValue(chapter.name)
         chose.child("textId").setValue(id)
         chose.child("date").setValue(chapter.date)
-        chose.child("commentsId")
 
         saveText(text, id)
-        RanobeBase.addChapterToRanobe(originalName, idTeam, id)
+        RanobeBase.addChapterToRanobe(originalName, idTeam, id){
+            callable(it)
+        }
     }
 
     fun updateInfoChapter(idTeam: String, idChapter: String, newInfo: HashMap<String, Any>){
@@ -80,6 +81,7 @@ class ChapterBase {
             }
         })
     }
+
 
 
     fun getAllChaptersTeam(chaptersId: List<String>) : List<Chapter>{

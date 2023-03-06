@@ -22,7 +22,6 @@ class TeamBase {
         tm.child("emailCreator").setValue(team.emailCreator)
         tm.child("date").setValue(team.date)
         UserBase.addElementToUser(team.idTeam, "teamId"){
-            Log.e("info", FirebaseAuth.getInstance().currentUser.toString())
             callable(it)
         }
     }

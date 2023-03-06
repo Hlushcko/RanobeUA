@@ -1,10 +1,7 @@
 package com.ranobeua.firebase
 
-import android.provider.ContactsContract.RawContacts.Data
-import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.ranobeua.firebase.other.TeamBase
 import com.ranobeua.firebase.other.data.Team
 import com.ranobeua.firebase.user.UserBase
@@ -14,20 +11,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.junit.Assert.*
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.Date
-import java.util.TimeZone
 import java.util.concurrent.CountDownLatch
 
 @RunWith(JUnit4::class)
-class FirebaseTeamTests {
+class TeamTests {
 
     val email = "test.user.email@ranobe.ua.com"
     val password = "passwordUser"
 
-    val baseUser = UserBase()
     val teamBase = TeamBase()
     val team = Team(
         "testTeam",
@@ -42,7 +34,7 @@ class FirebaseTeamTests {
         FirebaseApp.initializeApp(InstrumentationRegistry.getInstrumentation().targetContext)
 
         val latch = CountDownLatch(1)
-        baseUser.logIn(email, password){
+        UserBase().logIn(email, password){
             assertEquals(true, it)
             latch.countDown()
         }

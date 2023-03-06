@@ -15,26 +15,30 @@ class RanobeBase {
         private var currentPosition: String? = null
 
 
-        fun addChapterToRanobe(originalName: String, teamId: String, chapterId: String){
+        fun addChapterToRanobe(originalName: String, teamId: String, chapterId: String, callable: (Boolean?) -> Unit){
             val chapters = ranobeBase.child(originalName).child(teamId).child("chaptersId").push()
-            chapters.setValue(chapterId)
+            chapters.setValue(chapterId).addOnCompleteListener {
+                callable(it.isSuccessful)
+            }
         }
 
 
     }
 
 
-    fun createRanobe(ranobe: Ranobe){
+    fun createRanobe(ranobe: Ranobe, callable: (Boolean?) -> Unit){
         val ranobePath = ranobeBase.child(ranobe.originalName)
         ranobePath.child("originalName").setValue(ranobe.originalName)
         ranobePath.child("author").setValue(ranobe.author)
         ranobePath.child("year").setValue(ranobe.year)
 
-        addTranslateTeamInfo(ranobe.originalName, ranobe.ranobeTeamInfo.values.first())
+        addTranslateTeamInfo(ranobe.originalName, ranobe.ranobeTeamInfo.values.first()){
+            callable(it)
+        }
     }
 
 
-    fun addTranslateTeamInfo(originalName: String, ranobe: RanobeTeamInfo){
+    fun addTranslateTeamInfo(originalName: String, ranobe: RanobeTeamInfo, callable: (Boolean?) -> Unit){
         val ranobePath = ranobeBase.child(originalName)
 
         val teamInfo = ranobePath.child(ranobe.idTeam)
@@ -43,21 +47,25 @@ class RanobeBase {
         teamInfo.child("status").setValue(ranobe.status)
         teamInfo.child("team").setValue(ranobe.team)
         teamInfo.child("idTeam").setValue(ranobe.idTeam)
-        teamInfo.child("urlTeam").setValue(ranobe.urlTeam)
-        teamInfo.child("chaptersId")
+        teamInfo.child("urlTeam").setValue(ranobe.urlTeam).addOnCompleteListener {
+            callable(it.isSuccessful)
+        }
     }
 
-    fun updateInfoRanobeTeam(originalName: String, idTeam: String, newInfo: HashMap<String, Any>){
-        ranobeBase.child(originalName).child(idTeam).updateChildren(newInfo)
+    fun updateInfoRanobeTeam(originalName: String, idTeam: String, newInfo: HashMap<String, Any>, callable: (Boolean?) -> Unit){
+        ranobeBase.child(originalName).child(idTeam).updateChildren(newInfo).addOnCompleteListener {
+            callable(it.isSuccessful)
+        }
     }
 
 
     fun getRanobeInfo(originalName: String, callable: (Ranobe?) -> Unit){
-        val base = ranobeBase.orderByChild("originalName").startAt(originalName)
+        val base = ranobeBase.orderByChild("originalName").equalTo(originalName)
 
         base.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                callable(snapshot.getValue(Ranobe::class.java))
+                val element = snapshot.children.firstOrNull()?.getValue(Ranobe::class.java)
+                callable(element)
             }
 
             override fun onCancelled(error: DatabaseError) {

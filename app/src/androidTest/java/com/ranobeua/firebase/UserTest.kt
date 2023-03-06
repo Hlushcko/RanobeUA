@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch
 
 
 @RunWith(AndroidJUnit4::class)
-class FirebaseUserTest {
+class UserTest {
 
     private val firebase = UserBase();
 

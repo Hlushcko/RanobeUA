@@ -1,4 +1,4 @@
-package com.ranobeua
+package com.ranobeua.firebase
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -44,7 +44,7 @@ class FirebaseAuthenticationTest {
         latch.await()
 
         latch = CountDownLatch(1)
-        firebase.getUserInfo(name) { result ->
+        firebase.getUserInfoByName(name) { result ->
             assertEquals(email, result?.email)
             assertEquals(name, result?.name)
             assertEquals("новачок", result?.level)
@@ -55,6 +55,34 @@ class FirebaseAuthenticationTest {
 
         firebase.deleteAccount()
     }
+
+
+    @Test
+    fun getUserByEmail(){
+        val email = "realtime.test.user@ranobe.ua.com"
+        val password = "testPassword"
+        val name = "testPassword"
+        var latch = CountDownLatch(1)
+
+        firebase.registerAccount(name, email, password){ it ->
+            assertEquals(true, it)
+            latch.countDown()
+        }
+        latch.await()
+
+        latch = CountDownLatch(1)
+        firebase.getUserInfoByEmail(email){ result ->
+            assertEquals(email, result?.email)
+            assertEquals(name, result?.name)
+            assertEquals("новачок", result?.level)
+            assertEquals(0, result?.readChapters)
+            latch.countDown()
+        }
+        latch.await()
+
+        firebase.deleteAccount()
+    }
+
 
     @Test
     fun logIn(){
@@ -91,7 +119,7 @@ class FirebaseAuthenticationTest {
         firebase.updateInfoUser(name, hashMap)
 
         latch = CountDownLatch(1)
-        firebase.getUserInfo(name) { result ->
+        firebase.getUserInfoByName(name) { result ->
             assertEquals(email, result?.email)
             assertEquals(name, result?.name)
             assertEquals("новачок", result?.level)

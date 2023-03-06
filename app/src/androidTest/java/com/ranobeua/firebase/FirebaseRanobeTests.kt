@@ -1,4 +1,4 @@
-package com.ranobeua
+package com.ranobeua.firebase
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.firebase.FirebaseApp

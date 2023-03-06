@@ -1,15 +1,12 @@
 package com.ranobeua.firebase.user
 
 
-import android.util.Log
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ranobeua.firebase.user.data.User
-import java.util.concurrent.CountDownLatch
 
 
 class UserBase {
@@ -21,8 +18,25 @@ class UserBase {
         fun addCommentToUser(idComment: String){
             val email = auth.currentUser?.email
             if(email != null) {
-                val comments = userBase.child(email).child("comments")
-                comments.push().setValue(idComment)
+                userBase.orderByChild("email").equalTo(email)
+                    .addListenerForSingleValueEvent(object: ValueEventListener {
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val userPath = snapshot.children.firstOrNull()?.key
+
+                            if (userPath != null && userPath.isNotEmpty()) {
+                                val comments = userBase.child(userPath).child("comments")
+                                comments.push().setValue(idComment)
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            throw Exception("error connect to firebase")
+                        }
+
+                    })
+            }else {
+                throw Exception("user email is null!")
             }
         }
 
@@ -67,7 +81,7 @@ class UserBase {
     //                    нуль, кажемо це користувачу
     //                }
     //            }
-    fun getUserInfo(name: String, callback: (User?) -> Unit){
+    fun getUserInfoByName(name: String, callback: (User?) -> Unit){
         userBase.child(name).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val result = snapshot.getValue(User::class.java)
@@ -78,6 +92,22 @@ class UserBase {
                 callback(null)
             }
         })
+    }
+
+
+    fun getUserInfoByEmail(email: String, callback: (User?) -> Unit){
+        userBase.orderByChild("email").equalTo(email)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.children.firstOrNull()?.getValue(User::class.java)
+                    callback(user)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(null)
+                }
+
+            })
     }
 
 

@@ -6,4 +6,8 @@
     <string name="next">next</string>
     <string name="send">send</string>
     <string name="myComment">мій коментар</string>
+    <string name="login">Увійти</string>
+    <string name="resetPassword">змінити пароль</string>
+    <string name="email">email</string>
+    <string name="password">passwrod</string>
 </resources>

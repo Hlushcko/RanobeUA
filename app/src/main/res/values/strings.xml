@@ -18,4 +18,5 @@
     <string name="team">team</string>
     <string name="urlteam">urlTeam</string>
     <string name="description">description</string>
+    <string name="download">Download</string>
 </resources>

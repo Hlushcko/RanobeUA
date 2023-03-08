@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/teamName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textSize="8pt"

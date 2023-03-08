@@ -4,29 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/black"
     tools:context=".mainApp.fragments.ranobe.RanobeFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/originalName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="originalName"
+        android:text="@string/originalname"
         android:textColor="@color/white"
-        android:textSize="10pt"
+        android:textSize="8pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollViewInfo"
+        android:id="@+id/scrollInformation"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/originalName">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/linearLayout5"
+                android:id="@+id/layoutInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -45,7 +46,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -54,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="150"
-                        android:text="author"
+                        android:text="@string/author"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -63,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="30"
-                        android:text="year"
+                        android:text="@string/year"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -72,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="10"
-                        android:text="name"
+                        android:text="@string/name"
                         android:textColor="@color/white" />
 
                 </LinearLayout>
@@ -90,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="50"
-                        android:text="status"
+                        android:text="@string/status"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -99,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="20"
-                        android:text="team"
+                        android:text="@string/team"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -108,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:maxLength="20"
-                        android:text="urlTeam"
+                        android:text="@string/urlteam"
                         android:textColor="@color/white" />
                 </LinearLayout>
 
@@ -122,15 +123,34 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="desctiption"
+                android:text="@string/description"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+                app:layout_constraintTop_toBottomOf="@+id/layoutInfo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollInformation" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChapters"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerTeam" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

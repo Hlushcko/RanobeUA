@@ -10,4 +10,12 @@
     <string name="resetPassword">змінити пароль</string>
     <string name="email">email</string>
     <string name="password">passwrod</string>
+    <string name="originalname">originalName</string>
+    <string name="author">author</string>
+    <string name="year">year</string>
+    <string name="name">name</string>
+    <string name="status">status</string>
+    <string name="team">team</string>
+    <string name="urlteam">urlTeam</string>
+    <string name="description">description</string>
 </resources>

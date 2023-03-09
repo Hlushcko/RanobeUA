@@ -41,7 +41,6 @@ class UserBase {
         }
     }
 
-    // TODO: name має складатись виключно із символів, без знаків ?.!№;":%* та інших, виключно текст
     fun registerAccount(name: String, email: String, password: String, callback: (Boolean?) -> Unit){
         if(name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -60,7 +59,6 @@ class UserBase {
         }
     }
 
-
     private fun addInfoToDatabase(name: String, email: String){
         val user = userBase.child(name)
         user.child("email").setValue(email)
@@ -72,14 +70,6 @@ class UserBase {
     }
 
 
-    // TODO: клас який буде це викликати має містити наступний код:
-    //  getUserInfo("a"){ data ->
-    //                if (data != null){
-    //                   не нуль, обробляєм
-    //                }else{
-    //                    нуль, кажемо це користувачу
-    //                }
-    //            }
     fun getUserInfoByName(name: String, callback: (User?) -> Unit){
         userBase.child(name).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -92,7 +82,6 @@ class UserBase {
             }
         })
     }
-
 
     fun getUserInfoByEmail(email: String, callback: (User?) -> Unit){
         userBase.orderByChild("email").equalTo(email)
@@ -109,14 +98,9 @@ class UserBase {
             })
     }
 
-
-    // TODO: потрібно дати можливість міняти нік, кількість прочитаних глав,
-    //  рівень та id команди в які може бути учасник. Потім це буде перевірятись.
-    //  В хеш таблицю в String пишемо наприклад "name", а Any буде містити нове значення.
     fun updateInfoUser(name: String, hashMap: HashMap<String, Any>){
         userBase.child(name).updateChildren(hashMap)
     }
-
 
     fun logIn(email: String, password: String, callable: (Boolean?) -> Unit) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -127,7 +111,6 @@ class UserBase {
             throw Exception("user is not created or not verification")
         }
     }
-
 
     fun signOut(){
         auth.signOut()

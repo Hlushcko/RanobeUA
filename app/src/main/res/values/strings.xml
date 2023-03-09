@@ -21,4 +21,7 @@
     <string name="download">Download</string>
     <string name="register">зареєструватись</string>
     <string name="loginInAccount">увійти в акаунт</string>
+    <string name="level">level:</string>
+    <string name="read_chapters">read chapters:</string>
+    <string name="team_id">team id:</string>
 </resources>

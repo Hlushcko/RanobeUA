@@ -1,4 +1,4 @@
-package com.ranobeua.base.firebase
+package com.ranobeua.base.firebase.viewModel
 
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,13 @@ class ViewModelUserBase : ViewModel() {
     // null - name, email or password is null or not correct
     fun registration(name: String, email: String, password: String, callback: (Boolean?) -> Unit){
         if(!checkChar(name) && checkChar(password) && email.isEmailValid()){
-            user.registerAccount(name, email, password, callback)
+            getUserByName(name){
+                if (it != null) {
+                    user.registerAccount(name, email, password, callback)
+                }else{
+                    throw Exception("this name already exists")
+                }
+            }
         }else{
             callback(null)
         }

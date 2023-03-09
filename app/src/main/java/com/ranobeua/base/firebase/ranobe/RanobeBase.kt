@@ -75,6 +75,7 @@ class RanobeBase {
     }
 
 
+    // TODO: тут швидше за все буде помилка тому що я передаю нулл, переписати!
     fun getRanobeList(callable: (List<Ranobe>?) -> Unit){
         ranobeBase.startAt(currentPosition).limitToFirst(20)
             .addListenerForSingleValueEvent(object : ValueEventListener{

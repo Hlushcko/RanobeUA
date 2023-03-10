@@ -50,8 +50,12 @@ class ViewModelUserBase : ViewModel() {
         return user.getStatusLogin()
     }
 
-    fun resetPassword(email: String){
-        user.resetPassword(email)
+    fun resetPassword(email: String, callback: (Boolean?) -> Unit){
+        if(email.isEmailValid()) {
+            user.resetPassword(email, callback)
+        }else{
+            callback(null)
+        }
     }
 
     fun deleteAccount(){

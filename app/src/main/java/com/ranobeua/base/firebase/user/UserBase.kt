@@ -108,7 +108,7 @@ class UserBase {
                 callable(it.isSuccessful)
             }
         }else{
-            throw Exception("user is not created or not verification")
+            callable(null)
         }
     }
 
@@ -120,8 +120,10 @@ class UserBase {
         return auth.currentUser != null && auth.currentUser?.isEmailVerified!!
     }
 
-    fun resetPassword(email: String){
-        auth.sendPasswordResetEmail(email)
+    fun resetPassword(email: String, callback: (Boolean?) -> Unit){
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
+            callback(it.isSuccessful)
+        }
     }
 
     fun deleteAccount(){

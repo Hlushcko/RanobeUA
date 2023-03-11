@@ -108,6 +108,7 @@ class LoginFragment : Fragment() {
     private fun initRegistration(){
         registration?.setOnClickListener{
             val frag = activity?.supportFragmentManager?.beginTransaction()
+            frag?.addToBackStack(null)
             frag?.replace(R.id.authenticationUser, RegistrationFragment())
         }
     }
@@ -162,8 +163,8 @@ class LoginFragment : Fragment() {
 
 
     private fun startMainActivity(){
-        val frag = activity?.supportFragmentManager?.beginTransaction()
-        frag?.replace(R.id.authenticationUser, LoginFragment())
+        val intent = Intent(activity?.applicationContext, MainActivity::class.java)
+        startActivity(intent)
     }
 
 }

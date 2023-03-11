@@ -110,6 +110,7 @@ class LoginFragment : Fragment() {
             val frag = activity?.supportFragmentManager?.beginTransaction()
             frag?.addToBackStack(null)
             frag?.replace(R.id.authenticationUser, RegistrationFragment())
+            frag?.commit()
         }
     }
 

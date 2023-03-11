@@ -112,6 +112,7 @@ class RegistrationFragment : Fragment() {
         login?.setOnClickListener {
             val frag = activity?.supportFragmentManager?.beginTransaction()
             frag?.replace(R.id.authenticationUser, LoginFragment())
+            frag?.commit()
         }
     }
 

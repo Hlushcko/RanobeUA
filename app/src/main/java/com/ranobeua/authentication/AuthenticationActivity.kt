@@ -13,11 +13,12 @@ class AuthenticationActivity : AppCompatActivity() {
         startLoginFragment()
     }
 
+
     private fun startLoginFragment(){
         val frag = supportFragmentManager.beginTransaction()
         frag.addToBackStack(null)
         frag.replace(R.id.authenticationUser, LoginFragment())
+        frag.commit()
     }
-
 
 }

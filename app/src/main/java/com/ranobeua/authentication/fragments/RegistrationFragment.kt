@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+
 import com.ranobeua.R
 import com.ranobeua.base.firebase.viewModel.ViewModelUserBase
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +55,6 @@ class RegistrationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initElements()
-        checkLogin()
     }
 
 
@@ -75,6 +77,7 @@ class RegistrationFragment : Fragment() {
         initRegistration()
         initLogin()
     }
+
 
     private fun initRegistration(){
         registration?.setOnClickListener{
@@ -105,23 +108,12 @@ class RegistrationFragment : Fragment() {
     }
 
 
-    private fun checkLogin(){
-        if(userBase?.statusLogin() == true){
-            startMainActivity()
-        }
-    }
-
-
     private fun initLogin() {
         login?.setOnClickListener {
-            startMainActivity()
+            val frag = activity?.supportFragmentManager?.beginTransaction()
+            frag?.replace(R.id.authenticationUser, LoginFragment())
         }
     }
 
-
-    private fun startMainActivity(){
-        val frag = activity?.supportFragmentManager?.beginTransaction()
-        frag?.replace(R.id.authenticationUser, LoginFragment())
-    }
 
 }

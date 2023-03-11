@@ -54,8 +54,14 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initElements()
+        checkLogin()
     }
 
+    private fun checkLogin(){
+        if(userBase?.statusLogin() == true){
+            startMainActivity()
+        }
+    }
 
     private fun initElements(){
         userBase = ViewModelProvider(this)[ViewModelUserBase::class.java]
@@ -138,8 +144,7 @@ class LoginFragment : Fragment() {
                 userBase?.login(email?.text.toString(), password?.text.toString()) {
                     when (it) {
                         true -> {
-                            val intent = Intent(activity, MainActivity::class.java)
-                            startActivity(intent)
+                            startMainActivity()
                         }
                         false -> {
                             Toast.makeText(activity?.applicationContext, errorFirebase, Toast.LENGTH_LONG).show()
@@ -153,6 +158,12 @@ class LoginFragment : Fragment() {
 
             }
         }
+    }
+
+
+    private fun startMainActivity(){
+        val frag = activity?.supportFragmentManager?.beginTransaction()
+        frag?.replace(R.id.authenticationUser, LoginFragment())
     }
 
 }

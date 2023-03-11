@@ -26,7 +26,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/userEmailEditText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:background="@color/white"
@@ -43,7 +43,7 @@
 
 
     <EditText
-        android:id="@+id/firstPassword"
+        android:id="@+id/firstPasswordEdit"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
@@ -56,10 +56,10 @@
         android:textSize="8pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/userEmailEditText" />
 
     <EditText
-        android:id="@+id/secondPassword"
+        android:id="@+id/secondPasswordEdit"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
@@ -72,9 +72,10 @@
         android:textSize="8pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/firstPasswordEdit" />
 
     <TextView
+        android:id="@+id/goUserAccount"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/loginInAccount"
@@ -84,7 +85,7 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/secondPasswordEdit" />
 
     <Button
         android:id="@+id/buttonRegistration"
@@ -94,7 +95,7 @@
         android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/secondPasswordEdit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

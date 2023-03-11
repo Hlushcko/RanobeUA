@@ -9,16 +9,13 @@ class ViewModelUserBase : ViewModel() {
 
     val user = UserBase()
 
-    // true - ok,
-    // false - error registration in firebase,
-    // null - name, email or password is null or not correct
     fun registration(name: String, email: String, password: String, callback: (Boolean?) -> Unit){
         if(!checkChar(name) && checkChar(password) && email.isEmailValid()){
             getUserByName(name){
                 if (it != null) {
                     user.registerAccount(name, email, password, callback)
                 }else{
-                    throw Exception("this name already exists")
+                    callback(false)
                 }
             }
         }else{

@@ -2,17 +2,19 @@ package com.ranobeua.authentication.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+
 import com.ranobeua.R
 import com.ranobeua.base.firebase.viewModel.ViewModelUserBase
 import com.ranobeua.mainApp.MainActivity
@@ -25,7 +27,6 @@ class LoginFragment : Fragment() {
     private val completeMessageResetPassword = "На вашу електронну адресу відправлено лист для відновлення паролю"
     private val errorFirebase = "Ваш профіль не було знайдено або firebase не відповідає, спробуйте знову"
     private val isNotCorrect = "пошта або пароль який ви ввели не відповідає критеріям"
-
 
     private var email: EditText? = null
     private var password: EditText? = null
@@ -43,11 +44,12 @@ class LoginFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initObserve()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,13 +61,15 @@ class LoginFragment : Fragment() {
         userBase = ViewModelProvider(this)[ViewModelUserBase::class.java]
     }
 
+
     private fun initView(view: View){
-        email = view.findViewById(R.id.editTextTextEmailAddress)
+        email = view.findViewById(R.id.editTextEmailAddress)
         password = view.findViewById(R.id.firstPassword)
         registration = view.findViewById(R.id.registration)
         setPassword = view.findViewById(R.id.resetPassword)
         login = view.findViewById(R.id.loginUser)
     }
+
 
     private fun initObserve(){
 //        initEmail()
@@ -97,11 +101,11 @@ class LoginFragment : Fragment() {
 
     private fun initRegistration(){
         registration?.setOnClickListener{
-            lifecycleScope.launch(Dispatchers.IO) {
-
-            }
+            val frag = activity?.supportFragmentManager?.beginTransaction()
+            frag?.replace(R.id.authenticationUser, RegistrationFragment())
         }
     }
+
 
     private fun initSetPassword(){
         setPassword?.setOnClickListener {
@@ -125,6 +129,7 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
 
     private fun initLogin() {
         login?.setOnClickListener {

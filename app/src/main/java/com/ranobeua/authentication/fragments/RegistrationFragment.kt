@@ -52,6 +52,7 @@ class RegistrationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initElements()
+        checkLogin()
     }
 
 
@@ -104,11 +105,23 @@ class RegistrationFragment : Fragment() {
     }
 
 
+    private fun checkLogin(){
+        if(userBase?.statusLogin() == true){
+            startMainActivity()
+        }
+    }
+
+
     private fun initLogin() {
         login?.setOnClickListener {
-            val frag = activity?.supportFragmentManager?.beginTransaction()
-            frag?.replace(R.id.authenticationUser, LoginFragment())
+            startMainActivity()
         }
+    }
+
+
+    private fun startMainActivity(){
+        val frag = activity?.supportFragmentManager?.beginTransaction()
+        frag?.replace(R.id.authenticationUser, LoginFragment())
     }
 
 }

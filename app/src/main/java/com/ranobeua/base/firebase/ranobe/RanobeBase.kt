@@ -75,16 +75,20 @@ class RanobeBase {
     }
 
 
-    // TODO: тут швидше за все буде помилка тому що я передаю нулл, переписати!
     fun getRanobeList(callable: (List<Ranobe>?) -> Unit){
-        ranobeBase.startAt(currentPosition).limitToFirst(20)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
+        val query = ranobeBase.orderByKey().limitToFirst(20)
+        if(currentPosition != null){
+            query.startAt(currentPosition)
+        }
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = ArrayList<Ranobe>()
                 for(element in snapshot.children){
                     list.add(element.getValue(Ranobe::class.java)!!)
                     currentPosition = element.key
                 }
+                callable(list)
             }
 
             override fun onCancelled(error: DatabaseError) {

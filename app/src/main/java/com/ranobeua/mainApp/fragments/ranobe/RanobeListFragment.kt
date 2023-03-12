@@ -30,7 +30,7 @@ class RanobeListFragment : Fragment() {
 
     private fun initViewModels(){
         ranobeBase = ViewModelProvider(this)[ViewModelRanobeBase::class.java]
-        connector = ViewModelProvider(this)[ModelConnect::class.java]
+        connector = ViewModelProvider(requireActivity())[ModelConnect::class.java]
     }
 
     private fun initRecycler(){

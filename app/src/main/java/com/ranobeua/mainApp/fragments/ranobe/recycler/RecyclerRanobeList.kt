@@ -33,18 +33,19 @@ class RecyclerRanobeList(): ListAdapter<Ranobe, RecyclerRanobeList.RecyclerHolde
         return RecyclerHolder(LayoutInflater.from(parent.context).inflate(R.layout.ranobe_preview, parent, false))
     }
 
-
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         val ranobe = getItem(position)
         holder.setNameView(ranobe.originalName)
         holder.setYearView(ranobe.year)
-        holder.clickNameRanobe { openRanobe() }
+        holder.clickNameRanobe {
+            model?.setName(it!!)
+            openRanobe()
+        }
 
         if(position == itemCount - 1){
             model?.setNextRanobe(true)
         }
     }
-
 
     private fun openRanobe(){
         val frag = activity?.get()?.supportFragmentManager?.beginTransaction()
@@ -52,7 +53,6 @@ class RecyclerRanobeList(): ListAdapter<Ranobe, RecyclerRanobeList.RecyclerHolde
         frag?.replace(R.id.mainFrame, ChapterFragment())
         frag?.commit()
     }
-
 
 
     class RecyclerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -7,7 +7,15 @@ class ModelConnect : ViewModel() {
 
     private val nextRanobe: MutableLiveData<Boolean> = MutableLiveData(true)
     private lateinit var nameRanobe: String
+    private val chapterId: MutableLiveData<String> = MutableLiveData()
+    private val teamId: MutableLiveData<Short> = MutableLiveData(-1)
 
+
+    fun setTeamId(team: Short){
+        teamId.value = team
+    }
+
+    fun getTeamId() = teamId
 
     fun setName(newName: String){
         nameRanobe = newName
@@ -15,11 +23,16 @@ class ModelConnect : ViewModel() {
 
     fun getName() = nameRanobe
 
-    fun getNextRanobeStatus() = nextRanobe
+    fun setChapterId(id: String){
+        chapterId.value = id
+    }
+
+    fun getChapterId() = chapterId
 
     fun setNextRanobe(bool: Boolean){
         nextRanobe.value = bool
     }
 
+    fun getNextRanobeStatus() = nextRanobe
 
 }

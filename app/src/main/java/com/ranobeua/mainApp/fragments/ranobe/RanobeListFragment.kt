@@ -6,7 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.ranobeua.R
+import com.ranobeua.base.firebase.ranobe.data.Ranobe
 import com.ranobeua.base.firebase.viewModel.ViewModelRanobeBase
 import com.ranobeua.mainApp.fragments.ranobe.recycler.RecyclerRanobeList
 import com.ranobeua.mainApp.fragments.ranobe.recycler.viewModelConnector.ModelConnect
@@ -21,17 +23,18 @@ class RanobeListFragment : Fragment() {
     private var connector: ModelConnect? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModels()
         initRecycler()
     }
 
+
     private fun initViewModels(){
         ranobeBase = ViewModelProvider(requireActivity())[ViewModelRanobeBase::class.java]
         connector = ViewModelProvider(requireActivity())[ModelConnect::class.java]
     }
+
 
     private fun initRecycler(){
         ranobeRecycler = RecyclerRanobeList(requireActivity())
@@ -41,16 +44,18 @@ class RanobeListFragment : Fragment() {
         nextRanobeInfo()
     }
 
+
     private fun nextRanobeInfo(){
         connector?.getNextRanobeStatus()?.observe(this, Observer { it ->
             if(it == true){
                 ranobeBase?.getRanobeList {result ->
+                    val newList = ArrayList<Ranobe>(ranobeRecycler?.currentList!!)
+                    newList.addAll(result!!)
                     ranobeRecycler?.submitList(result)
                     connector?.setNextRanobe(false)
                 }
             }
         })
     }
-
 
 }

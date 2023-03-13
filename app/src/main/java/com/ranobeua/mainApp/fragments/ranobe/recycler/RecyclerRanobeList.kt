@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ranobeua.R
 import com.ranobeua.base.firebase.ranobe.data.Ranobe
 import com.ranobeua.mainApp.fragments.ranobe.ChapterFragment
+import com.ranobeua.mainApp.fragments.ranobe.RanobeFragment
 import com.ranobeua.mainApp.fragments.ranobe.recycler.viewModelConnector.ModelConnect
 import java.lang.ref.WeakReference
 
@@ -33,6 +34,7 @@ class RecyclerRanobeList(): ListAdapter<Ranobe, RecyclerRanobeList.RecyclerHolde
         return RecyclerHolder(LayoutInflater.from(parent.context).inflate(R.layout.ranobe_preview, parent, false))
     }
 
+
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         val ranobe = getItem(position)
         holder.setNameView(ranobe.originalName)
@@ -47,10 +49,11 @@ class RecyclerRanobeList(): ListAdapter<Ranobe, RecyclerRanobeList.RecyclerHolde
         }
     }
 
+
     private fun openRanobe(){
         val frag = activity?.get()?.supportFragmentManager?.beginTransaction()
         frag?.addToBackStack(null)
-        frag?.replace(R.id.mainFrame, ChapterFragment())
+        frag?.replace(R.id.mainFrame, RanobeFragment())
         frag?.commit()
     }
 
@@ -84,6 +87,7 @@ class RecyclerRanobeList(): ListAdapter<Ranobe, RecyclerRanobeList.RecyclerHolde
         }
 
     }
+
 
     class RanobeDiffCallback : DiffUtil.ItemCallback<Ranobe>() {
         override fun areItemsTheSame(oldItem: Ranobe, newItem: Ranobe): Boolean {

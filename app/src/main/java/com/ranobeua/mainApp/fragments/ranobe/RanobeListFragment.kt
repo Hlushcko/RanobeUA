@@ -49,10 +49,13 @@ class RanobeListFragment : Fragment() {
         connector?.getNextRanobeStatus()?.observe(this, Observer { it ->
             if(it == true){
                 ranobeBase?.getRanobeList {result ->
-                    val newList = ArrayList<Ranobe>(ranobeRecycler?.currentList!!)
-                    newList.addAll(result!!)
-                    ranobeRecycler?.submitList(result)
-                    connector?.setNextRanobe(false)
+
+                    if(result != null) {
+                        val newList = ArrayList<Ranobe>(ranobeRecycler?.currentList!!)
+                        newList.addAll(result)
+                        ranobeRecycler?.submitList(result)
+                        connector?.setNextRanobe(false)
+                    }
                 }
             }
         })

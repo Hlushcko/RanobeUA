@@ -11,8 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ranobeua.R
-import com.ranobeua.base.firebase.other.data.Team
-import com.ranobeua.base.firebase.ranobe.data.Chapter
 import com.ranobeua.base.firebase.ranobe.data.RanobeTeamInfo
 import com.ranobeua.base.firebase.viewModel.ViewModelChapterBase
 import com.ranobeua.base.firebase.viewModel.ViewModelRanobeBase
@@ -76,7 +74,6 @@ class RanobeFragment : Fragment() {
         recyclerT?.adapter = recyclerChapters
 
         getRanobeInfo()
-        chapterIdObserver()
         teamIdObserver()
     }
 
@@ -99,7 +96,9 @@ class RanobeFragment : Fragment() {
                 originalName.text = it.originalName
                 author.text = it.author
                 year.text = it.year
+
                 teamList = ArrayList(it.ranobeTeamInfo.values)
+                recyclerTeam?.submitList(teamList)
                 connector?.setTeamId(0)
             }
         }
@@ -108,24 +107,20 @@ class RanobeFragment : Fragment() {
     private fun teamIdObserver(){
         connector?.getTeamId()?.observe(this, Observer {
             if(it >= 0 && teamList != null){
-                val chapters: List<String> = ArrayList(teamList!![it.toInt()].chaptersId.values)
+                setView(teamList!![it])
+                val chapters: List<String> = ArrayList(teamList!![it].chaptersId.values)
                 val result = chapterBase?.getAllChaptersTeam(chapters)
                 recyclerChapters?.submitList(result)
             }
         })
     }
 
-    private fun getChaptersTeam(){
-
-    }
-
-
-    private fun chapterIdObserver(){
-        connector?.getChapterId()?.observe(this, Observer {
-            if(it.isNotEmpty()){
-
-            }
-        })
+    private fun setView(team: RanobeTeamInfo) {
+        name.text = team.name;
+        statusTranslate.text = team.status
+        teamTranslate.text = team.team
+        resourceTeam.text = team.urlTeam
+        description.text = team.description
     }
 
 }

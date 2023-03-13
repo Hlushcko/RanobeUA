@@ -18,7 +18,7 @@ import com.ranobeua.mainApp.fragments.ranobe.recycler.viewModelConnector.ModelCo
 import java.lang.ref.WeakReference
 
 
-class RecyclerChapters() : ListAdapter<Chapter, RecyclerChapters.ChaptersHolder>(ChaptersDiffCallback()) {
+class RecyclerChapters() : ListAdapter<Chapter, RecyclerChapters.ChaptersAdapter>(ChaptersDiffCallback()) {
 
     private var activity: WeakReference<FragmentActivity>? = null
     private var model: ModelConnect? = null
@@ -29,23 +29,19 @@ class RecyclerChapters() : ListAdapter<Chapter, RecyclerChapters.ChaptersHolder>
         model = ViewModelProvider(activity?.get()!!)[ModelConnect::class.java]
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChaptersHolder {
-        return ChaptersHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChaptersAdapter {
+        return ChaptersAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.chapter_info, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ChaptersHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChaptersAdapter, position: Int) {
         val chapter = getItem(position)
 
         holder.setNameView(chapter.name)
-        holder.clickNameRanobe {
-            model?.setName(it!!)
+        holder.clickChapter {
+            model?.setChapterId(chapter.chapterId)
             openChapter()
-        }
-
-        if (position == itemCount - 1) {
-            model?.setNextRanobe(true)
         }
     }
 
@@ -56,7 +52,7 @@ class RecyclerChapters() : ListAdapter<Chapter, RecyclerChapters.ChaptersHolder>
         frag?.commit()
     }
 
-    class ChaptersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChaptersAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var nameChapter: TextView? = null
         private var downloadChapter: TextView? = null
@@ -78,7 +74,7 @@ class RecyclerChapters() : ListAdapter<Chapter, RecyclerChapters.ChaptersHolder>
         }
 
 
-        fun clickNameRanobe(callback: (String?) -> Unit) {
+        fun clickChapter(callback: (String?) -> Unit) {
             nameChapter?.setOnClickListener {
                 callback(nameChapter!!.text.toString())
             }

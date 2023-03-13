@@ -8,10 +8,10 @@ class ModelConnect : ViewModel() {
     private val nextRanobe: MutableLiveData<Boolean> = MutableLiveData(true)
     private lateinit var nameRanobe: String
     private val chapterId: MutableLiveData<String> = MutableLiveData()
-    private val teamId: MutableLiveData<Short> = MutableLiveData(-1)
+    private val teamId: MutableLiveData<Int> = MutableLiveData(-1)
 
 
-    fun setTeamId(team: Short){
+    fun setTeamId(team: Int){
         teamId.value = team
     }
 
